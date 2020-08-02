@@ -1,42 +1,56 @@
 #include<bits/stdc++.h>
 using namespace std;
+string S;
+
+int get_len(int a , int b , string S)
+{
+    int idx = 0 , cnt = 0;
+    for(int i=0;i<S.length();i++)
+    {
+        if(idx==0 && S[i]==a+48)
+        {
+            cnt++;
+            idx=1;
+        }
+        else if(idx==1 && S[i]==b+48)
+        {
+            cnt++;
+            idx=0;
+        }
+    }
+    //cout<<a<<" "<<b<<" "<<cnt<<endl;
+    if(cnt%2==1)
+        cnt--;
+        
+    return cnt;
+}
 
 int main()
 {
-    int len;
-    string S , T="";
-    cin>>len;
-    cin>>S;
-    int i=0 ;
-    while(i<len)
+    int T;
+    cin>>T;
+    while(T--)
     {
-        if(i==len-1)
-            i++;
-        else
+        cin>>S;
+        vector<int>freq(10,0);
+        for(int i=0;i<S.length();i++)
+            freq[S[i]-48]++;
+            
+        int max_len = 0;
+        for(int i=0;i<10;i++)
+            max_len = max(max_len,freq[i]);
+            
+        for(int i=0;i<10;i++)
         {
-            if(S[i]!=S[i+1])
+            for(int j=0;j<10;j++)
             {
-                T+=S[i];
-                T+=S[i+1];
-                i+=2;
-            }
-            else
-            {
-                int j=i+1;
-                while(j<len && S[i]==S[j])
-                {
-                    j++;
-                }
-                if(j<len && S[i]!=S[j])
-                {
-                    T+=S[i];
-                    T+=S[j];
-                }
-                i=j+1;
+                if(i==j)
+                    continue;
+                int x = get_len(i,j,S);
+                max_len = max(max_len , x);
             }
         }
+        cout<<S.length()- max_len<<endl;
     }
-    cout<<S.length()-T.length()<<endl;
-    cout<<T;
     return 0;
 }
