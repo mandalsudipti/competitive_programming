@@ -1,20 +1,5 @@
 #include<bits/stdc++.h>
-using namespace std;
-
-bool is_valid(vector<int>& arr , vector<int>& ans)
-{
-    long long int arr_sum = 0 , diff_sum = 0 ;
-    for(int i = 0 ; i < arr.size() ; i++)
-    {
-        arr_sum+=arr[i];
-        diff_sum+=(abs(arr[i] - ans[i]));
-    }
-    
-    if(diff_sum * 2 <= arr_sum)
-        return true;
-    else
-        return false;
-}
+using namespace std ;
 
 int main()
 {
@@ -23,37 +8,24 @@ int main()
     
     while(T--)
     {
-        int n ;
-        cin>>n;
-        vector<int>arr(n);
-        for(int i = 0 ; i < n ; i++)
-            cin>>arr[i];
-            
-        vector<int>ans1(n);
-        vector<int>ans2(n);
+        int s ;
+        cin>>s;
+        int cnt = 1 , cur = 1;
+        s--;
         
-        for(int i = 0 ; i < n ; i++)
+        while(s > 0)
         {
-            if(i%2 == 0)
+            cnt++;
+            if(s >= cur + 2)
             {
-                ans1[i] = arr[i] ;
-                ans2[i] = 1 ;
+                s-=(cur+2);
+                cur+=2;
             }
             else
-            {
-                ans1[i] = 1 ;
-                ans2[i] = arr[i];
-            }
+                break;
         }
         
-        if(is_valid(arr,ans1))
-            for(int i = 0 ; i < n ; i++)
-                cout<<ans1[i]<<" ";
-        else
-            for(int i = 0 ; i < n ; i++)
-                cout<<ans2[i]<<" ";
-        cout<<endl;
+        cout<<cnt<<endl;
     }
-    
-    return 0;
+    return 0 ;
 }
