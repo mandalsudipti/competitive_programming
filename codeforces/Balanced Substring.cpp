@@ -1,28 +1,45 @@
 #include<bits/stdc++.h>
-using namespace std;
+using namespace std ;
+
 
 int main()
 {
-    int n ;
-    string S;
-    cin>>n>>S;
+    int T ;
+    cin>>T;
     
-    map<int,vector<int>> occurrence ;
-    occurrence[0].push_back(-1);
-    int freq = 0 ;
-    for(int i=0;i<n;i++)
+    while(T--)
     {
-        S[i]=='0'?freq--:freq++;
-        occurrence[freq].push_back(i);
+        int n ;
+        cin>>n;
+        string S ;
+        cin>>S ;
+        
+        map<int,int>diff ;
+        int a = 0 , b = 0 ;
+        bool found = false ;
+        for(int i = 0 ; i < n ; i++)
+        {
+            S[i] == 'a' ? a++ : b++ ;
+            
+            if(a == b)
+            {
+                found = true ;
+                cout<<"1 "<<(i+1)<<endl;
+                break ;
+            }
+            else if(diff.find(a - b) != diff.end())
+            {
+                found = true ;
+                cout<<diff[a - b] + 2 <<" "<<(i+1)<<endl;
+                break ;
+            }
+            else
+                diff[a-b] = i ;
+        }
+        
+        if(!found)
+            cout<<"-1 "<<"-1"<<endl ;
     }
     
-    int max_length = 0 ;
-    for(auto itr = occurrence.begin() ; itr!=occurrence.end() ; ++itr)
-    {
-        vector<int>arr = itr->second ;
-        int x = arr.back() - arr[0] ;
-        max_length = max( max_length , x);
-    }
-    cout<<max_length;
-    return 0;
+    return 0 ;
 }
